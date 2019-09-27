@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
