@@ -10,12 +10,15 @@ import org.springframework.web.client.RestTemplate;
 
 /**
  * @program: wallet
- * @description:
+ * @description: 注解版的配置
  * @author: wyb
  * @create: 2019-09-17 20:38
  **/
 @Configuration
-public class ConfigBean {
+public class ConfigBean {    //boot --> 等同于spring applicationContext.xml ---
+
+    // applicationContext.xml == ConfigBean(@Configuration)    boot推荐用注解
+    // <bean id = "userServiceImpl" class = "com.wallet.service.userServiceImpl">
 
     @Bean
     @LoadBalanced  //Spring Cloud Ribbon是基于Netflix Ribbon实现的一套"客户端"负载均衡的工具

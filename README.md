@@ -1,8 +1,8 @@
 # test-springcloud-wallet-user
 
-wallet : 父工程
+wallet : 整体父工程
 
-    wallet-api : entitygit add 
+    wallet-api : 公共子模块 entitygit add 
 
     wallet-provider-8001 : 微服务提供者8001
 
