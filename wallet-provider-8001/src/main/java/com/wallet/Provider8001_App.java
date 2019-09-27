@@ -12,7 +12,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  * @create: 2019-09-17 19:19
  **/
 @SpringBootApplication
-@EnableEurekaClient
+@EnableEurekaClient   //启动新组件技术,eureka客户端,会自动注册进eureka
 @EnableDiscoveryClient
 public class Provider8001_App {
 

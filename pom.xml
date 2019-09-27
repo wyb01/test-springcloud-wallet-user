@@ -85,12 +85,12 @@
         </dependencies>
     </dependencyManagement>
 
-    <build>
-        <finalName>wallet</finalName>
-        <resources>
+    <build>   <!-- 构建 -->
+        <finalName>wallet</finalName> <!-- 父工程名称-->
+        <resources>  <!--资源-->
             <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
+                <directory>src/main/resources</directory>  <!-- 允许访问'src/main/resources'文件夹下的内容-->
+                <filtering>true</filtering>   <!--过滤开启 -->
             </resource>
         </resources>
         <plugins>
@@ -99,7 +99,7 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <configuration>
                     <delimiters>
-                        <delimit>$</delimit>
+                        <delimit>$</delimit>   <!-- 以'$'开头和结尾的配置文件信息 -->
                     </delimiters>
                 </configuration>
             </plugin>
