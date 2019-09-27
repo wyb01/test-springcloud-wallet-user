@@ -1,0 +1,4 @@
+com/wallet/api/entity/User.class
+com/wallet/api/service/UserClientService.class
+com/wallet/api/service/UserClientServiceFallbackFactory$1.class
+com/wallet/api/service/UserClientServiceFallbackFactory.class

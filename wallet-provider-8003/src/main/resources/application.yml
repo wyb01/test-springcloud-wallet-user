@@ -1,0 +1,37 @@
+server:
+  port: 8003
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml
+  type-aliases-package: com.wallet.api.entity            # 所有Entity别名类所在包
+  mapper-locations:
+    - classpath:mybatis/mapper/**/*.xml                    # mapper映射文件
+
+spring:
+  application:
+    name: wallet-provider   #三个微服务工程均为同一个微服务名称
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
+    driver-class-name: org.gjt.mm.mysql.Driver              # mysql驱动包
+    url: jdbc:mysql://localhost:3306/wallet_user_03?useUnicode=true&characterEncoding=utf8         # 数据库名称
+    username: root
+    password: 12345678
+    dbcp2:
+      min-idle: 5                                           # 数据库连接池的最小维持连接数
+      initial-size: 5                                       # 初始化连接数
+      max-total: 5                                          # 最大连接数
+      max-wait-millis: 200                                  # 等待连接获取的最大超时时间
+
+eureka:
+  client: #客户端注册进eureka服务列表内
+    service-url:
+      #defaultZone: http://localhost:7001/eureka
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+  instance:
+    instance-id: wallet-provider-8003
+    prefer-ip-address: true     #访问路径可以显示IP地址
+
+info:
+  app.name: wallet-provider
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$

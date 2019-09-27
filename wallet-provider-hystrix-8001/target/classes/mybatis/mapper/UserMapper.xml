@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wallet.dao.UserDao">
+
+	<resultMap id="UserResultMap" type="com.wallet.api.entity.User">
+		<id column="user_id" jdbcType="BIGINT" property="userId" />
+		<result column="login_name" jdbcType="VARCHAR" property="loginName" />
+		<result column="uid" jdbcType="VARCHAR" property="uid" />
+		<result column="source_id" jdbcType="INTEGER" property="sourceId" />
+		<result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+		<result column="vip_level" jdbcType="INTEGER" property="vipLevel" />
+		<result column="pwd" jdbcType="VARCHAR" property="pwd" />
+		<result column="safety_code" jdbcType="VARCHAR" property="safetyCode" />
+		<result column="email" jdbcType="VARCHAR" property="email" />
+		<result column="telephone" jdbcType="VARCHAR" property="telephone" />
+		<result column="is_del" jdbcType="TINYINT" property="isDel" />
+		<result column="is_effect" jdbcType="TINYINT" property="isEffect" />
+		<result column="is_black" jdbcType="TINYINT" property="isBlack" />
+		<result column="active" jdbcType="TINYINT" property="active" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+		<result column="db_source" jdbcType="VARCHAR" property="db_source" />
+	</resultMap>
+
+	<select id="findById" resultMap="UserResultMap" parameterType="Long">
+		select user_id,login_name,uid,source_id,vip_level,nick_name,pwd,safety_code,email,telephone,is_del,is_effect,is_black,active,modify_time,login_time,db_source from user where user_id=#{userId};
+	</select>
+    <select id="findAll" resultMap="UserResultMap">
+		select user_id,login_name,uid,source_id,vip_level,nick_name,pwd,safety_code,email,telephone,is_del,is_effect,is_black,active,modify_time,login_time,db_source from user;
+	</select>
+    <insert id="addUser" parameterType="com.wallet.api.entity.User">
+		INSERT INTO user(login_name,uid,source_id,vip_level,nick_name,pwd,safety_code,email,telephone,is_del,is_effect,is_black,active,modify_time,login_time,db_source)
+			VALUES(#{loginName},#{uid},#{sourceId},#{vipLevel},#{nickName},#{pwd},#{safetyCode},#{email},#{telephone},#{isDel},#{isEffect},#{isBlack},#{active},#{modifyTime},#{loginTime},DATABASE());
+</insert>
+
+</mapper>
