@@ -18,15 +18,15 @@ zuul:
   #ignored-services: wallet-provider
   prefix: /wallet
   ignored-services: "*"
-  
-  routes:
+
+  routes:                               #域名映射
     mydept.serviceId: wallet-provider   #微服务真实地址
     mydept.path: /mydept/**             #配置后对外提供的虚拟地址
 
 info:
   app.name: wallet-zuul-gateway
-  build.artifactId: $project.artifactId$
-  build.version: $project.version$
+  build.artifactId: wallet-zuul-gateway-9527
+  build.version: 1.0-SNAPSHOT
 
 
 
