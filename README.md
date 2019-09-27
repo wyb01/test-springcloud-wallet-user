@@ -1,1 +1,6 @@
 # test-springcloud-wallet-user
+
+wallet : 父工程
+
+wallet-api : entity
+
