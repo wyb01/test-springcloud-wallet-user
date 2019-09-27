@@ -1,15 +1,17 @@
 server:
   port: 8001
 
+#整合mybatis
 mybatis:
   config-location: classpath:mybatis/mybatis.cfg.xml
   type-aliases-package: com.wallet.api.entity            # 所有Entity别名类所在包
   mapper-locations:
-    - classpath:mybatis/mapper/**/*.xml                    # mapper映射文件
+    - classpath:mybatis/mapper/**/*.xml                  # mapper映射文件
 
+#整合spring
 spring:
   application:
-    name: wallet-provider      #三个微服务工程均为同一个微服务名称
+    name: wallet-provider      #三个微服务工程均为同一个微服务名称（对外暴露的微服务名称）
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
     driver-class-name: org.gjt.mm.mysql.Driver              # mysql驱动包
@@ -33,5 +35,5 @@ eureka:
 
 info:
   app.name: wallet-provider
-  build.artifactId: wallet-provider-8001
-  build.version: 1.0-SNAPSHOT
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$

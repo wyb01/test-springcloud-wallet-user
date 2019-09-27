@@ -4,7 +4,7 @@
 
 <mapper namespace="com.wallet.dao.UserDao">
 
-	<resultMap id="UserResultMap" type="com.wallet.api.entity.User">
+	<resultMap id="UserResultMap" type="com.wallet.api.entity.User">   <!-- 下面的方法来实现此接口 -->
 		<id column="user_id" jdbcType="BIGINT" property="userId" />
 		<result column="login_name" jdbcType="VARCHAR" property="loginName" />
 		<result column="uid" jdbcType="VARCHAR" property="uid" />
