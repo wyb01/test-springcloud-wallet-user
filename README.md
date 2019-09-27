@@ -2,5 +2,5 @@
 
 wallet : 父工程
 
-wallet-api : entity
+wallet-api : entitygit add 
 
