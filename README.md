@@ -121,5 +121,76 @@
                         return new RandomRule();        //达到的目的，用我们重新选择的"随机算法"替代默认的轮询
                     }
             
+六、Feign负载均衡
+
+    Feign是一个声明式 WebService客户端。使 Feign能让编写Web Service客户端更加简单，它的使用方法是定义一个接口，然后
+    在上面添加注解，同时也支持JAX-RS标准的注解。Feign也支持可拔插式的编码器和解码器。Spring Cloud对Feign进行了封装，
+    使其支持了Spring MVC标准注解和 HttpMessageConverters。 Feign可以与Eureka和Ribbon组合使用以支持负载均衡。
+    
+    Feign是一个声明式的Web服务客户端，使得编写Web服务客户端变得非常容易。
+    只需要创建一个接口，然后在上面添加注解即可。
+    
+    Feign是怎么出来的？
+     1、大部分大家都可以接受直接调用我们的微服务来进行访问
+         private static final String REST_URL_PREFIX = "http://localhost:8001"; 
+             修改为：
+         private static final String REST_URL_PREFIX = "http://WALLET-PROVIDER"; 
         
+     2、大家目前都习惯面向接口面向接口编程，比如WebService接口,比如我们的DAO接口，这个已经是大家的规范
+        2.1 微服务名字获得调用地址
+        2.2 就是通过接口+注解，获得我们的调用服务
+        
+        适应社区其他程序员提出的，还是统一的面向接口编程的套路----Feign
+        
+        只需要创建一个接口，然后在上面添加注解即可。
+        
+           @Mapper
+           public interface DeptDao{
+           
+           }
+           
+    Feign能干什么
+    
+       Feign旨在使编写Java Http客户端变得更容易。
+       前面在使用 Ribbon+RestTemplate时，利用RestTemplate对http请求的封装处理，形成了一套模版化的调用方法。但是在实际
+       开发中，由于对服务依赖的调用可能不止一处，往往一个接口会被多处调用，所以通常都会针对每个微服务自行封装些客户端
+       类来包装这些依赖服务的调用。所以，Feign在此基础上做了进一步封装，由他来帮助我们定义和实现依赖服务接口的定义。在
+       Feign的实现下，我们只需创建一个接口并使用注解的方式来配置它(以前是Dao接口上面标注Mapper注解,现在是个微服务接口
+       上面标注一个Feign注解即可)，即可完成对服务提供方的接口绑定，简化了使用 Spring cloud Ribbon时，自动封装服务调用客户
+       端的开发量。
+       
+       Feign集成了Ribbon
+          利用Ribbon维护了wallet-provider的服务列表信息，并且通过轮询实现了客户端的负载均衡。而与Ribbon不同的是，通过Feign只需要定义服务
+          绑定接口且以声明式（@FeignClient）的方法，优雅而简单的实现了服务调用
+       
+    Feign工程创建步骤：
+    
+        1、pom.xml添加依赖
+        
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-feign</artifactId>
+            </dependency>
+            
+        2、主启动类添加注解：
+            @EnableFeignClients(basePackages= {"com.wallet"})
+            @ComponentScan("com.wallet")
+         
+        3、wallet-api pom.xml 添加feign依赖
+           
+        4、wallet-api添加service公用接口
+        
+              添加注解：@FeignClient(value="WALLET-PROVIDER")  -- 对哪一个微服务进行接口编程
+           
+        
+            
+       
+       
+       
+    
+        
+        
+    
+    
+       
     

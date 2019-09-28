@@ -12,8 +12,9 @@ import java.util.List;
  * @author
  * @date
  */
+
 //@FeignClient(value="WALLET-PROVIDER")   //对微服务进行面向"接口"的编程
-@FeignClient(value="WALLET-PROVIDER",fallbackFactory = UserClientServiceFallbackFactory.class)   //1、对微服务进行面向"接口"的编程 2、服务降级
+@FeignClient(value="WALLET-PROVIDER",fallbackFactory = UserClientServiceFallbackFactory.class)   //1、对哪一个微服务进行面向"接口"的编程 2、服务降级
 public interface UserClientService {
 
     @RequestMapping(value = "/user/get/{id}", method = RequestMethod.GET)
