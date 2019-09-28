@@ -183,7 +183,57 @@
               添加注解：@FeignClient(value="WALLET-PROVIDER")  -- 对哪一个微服务进行接口编程
            
         
-            
+         Ribbon: Controller + RestTemplate   
+         Feign:  接口
+         
+         Feign通过接口的方法调用Rest服务（之前是Ribbon+RestTempalte）,
+         该请求发送给Eureka服务器（http:WALLET-PROVIDER/user/list）,
+         通过Feign直接找到服务接口，由于在进行服务调用的时候融合了Ribbon技术，所以也支持负载均衡作用。
+         
+         
+七、Hystrix断路器
+
+        Hystrix是一个用于处理分布式系统的延迟和容错的开源库，在分布式系统里，许多依赖不可避免的会调用失败，比如超时、异常等，
+    Hystrix能够保证在一个依赖出问题的情况下，不会导致整体服务失败，避免级联故障，以提高分布式系统的弹性。
+        "断路器"本身是一种开关装置，当某个服务单元发生故障之后，通过断路器的故障监控（类似熔断保险丝），
+    向调用方返回一个符合预期的、可处理的备选响应（Fallback），而不是长时间的等待或者抛出调用方无法处理的异常，这样就保证了
+    服务调用方的线程不会被长时间、不必要的占用，从而避免了故障在分布式系统中的蔓延，乃至雪崩。
+    
+        注：是在服务端
+    
+    （一）服务熔断
+        
+          熔断机制是应对雪崩效应的一种微服务链路保护机制。
+          当扇出链路的某个微服务不可用或者响应时间太长时，会进行服务的降级，进而熔断该节点微服务的调用，快速返回'错误"的响应
+          信息。当检测到该节点微服务调用响应正常后恢复调用链路。在 SpringCloud框架里熔断机制通过 Hystrix实现。 Hystⅸx会监控微
+          服务间调用的状况，当失败的调用到一定阈值，缺省是5秒内20次调用失败就会启动熔断机制。熔断机制的注解是@HystrixCommand  
+          
+          <1> pom.xml:
+               <!-- hystrix -->
+               <dependency>
+                  <groupId>org.springframework.cloud</groupId>
+                  <artifactId>spring-cloud-starter-hystrix</artifactId>
+               </dependency>   
+               
+          <2>、application.yml:
+              修改一句话：
+                 instance-id: wallet-user8001-hystrix   #自定义hystrix相关的服务名称信息
+                 
+          <3>、controller的方法上面添加注解：
+               @HystrixCommand(fallbackMethod = "processHystrix_Get")  : processHystrix_Get()自己定义的方法 
+             
+               例：
+               if (null == user) {
+                  throw new RuntimeException("该ID：" + id + "没有对应的信息");  //抛出了错误信息，自动调用@HystrixCommand标注好的fallbackMethod调用类中的指定方法
+               } 
+               
+          <4>、主启动类添加注解：
+                @EnableCircuitBreaker  //对Hystrix熔断机制的支持
+          
+        
+    
+    
+         
        
        
        
