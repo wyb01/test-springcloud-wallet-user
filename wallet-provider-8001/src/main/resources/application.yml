@@ -11,7 +11,7 @@ mybatis:
 #整合spring
 spring:
   application:
-    name: wallet-provider      #三个微服务工程均为同一个微服务名称（对外暴露的微服务名称）
+    name: wallet-provider      #三个微服务工程均为同一个微服务名称（对外暴露的微服务名称），必须一致
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
     driver-class-name: org.gjt.mm.mysql.Driver              # mysql驱动包

@@ -99,4 +99,27 @@
                 
         config配置类添加注解：
             @LoadBalanced  //Spring Cloud Ribbon是基于Netflix Ribbon实现的一套"客户端"负载均衡的工具
+            
+        添加wallet-provider-8002/8003两个工程：
+            application.yml修改数据库连接
+            
+            
+        Ribbon使80通过eureka找到微服务"WALLET-PROVIDER"（三个工程），默认使用轮询算法访问服务接口，即provider7001/provider7002/provider7003轮询访问
+        
+        Ribbon在工作时分成两步
+            第一步先选择EurekaServer，它优先选择在同一个区域内负载较少的server。
+            第二步再根据用户指定的策略，在从server取到的服务注册列表中选择一个地址。
+            其中Ribbon提供了多种策略：比如轮询、随机和根据响应时间加权。
+            
+        Ribbon核心组件IRule:
+            重写算法：
+                配置类ConfigBean中添加：
+                
+                    @Bean
+                    public IRule myRule() {
+                        //return new RoundRobinRule();  //"轮询算法"
+                        return new RandomRule();        //达到的目的，用我们重新选择的"随机算法"替代默认的轮询
+                    }
+            
+        
     
