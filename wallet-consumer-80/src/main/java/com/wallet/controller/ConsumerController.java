@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 public class ConsumerController {
 
-    private static final String REST_URL_PREFIX = "http://WALLET-PROVIDER"; //微服务的真实名称
+    private static final String REST_URL_PREFIX = "http://WALLET-PROVIDER";  //eureka里面微服务的真实名称
 
     @Autowired
     private RestTemplate restTemplate;  //spring提供的客户端模板工具集 --- 发送rest请求，访问restful接口,

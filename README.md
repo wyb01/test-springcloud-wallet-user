@@ -49,3 +49,54 @@
                 }
                 return this.client;
             }
+            
+四、eureka集群配置
+
+    1、做域名映射   hosts文件
+    2、微服务注册进eureka集群
+    
+    **文件配置：**
+    
+        ~~7001(7002/7003 -- 注册进eureka集群) application.yml:~~   
+        
+        server:
+          port: 7001
+        
+        eureka:
+          instance:
+            hostname: eureka7001.com   #eureka服务端的实例名称
+          client:
+            register-with-eureka: false     # false表示不向注册中心注册自己
+            fetch-registry: false           #false表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务
+            service-url:
+               #defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/       #设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址（单机）。
+              defaultZone: http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+              
+    
+五、Ribbon负载均衡
+
+    Spring Cloud Ribbon是基于 Netflix Ribbon实现的一套 客户端 负载均衡的工具。
+    简单的说， Ribbon是Netflix发布的开源项目，主要功能是提供客户端的软件负载均衡算法，将Netflix的中间层服务连接在一起。
+    Ribbon客户端组件提供一系列完善的配置项如连接超时，重试等。简单的说，就是在配置文件中列出 Load Balancer(简称LB)后
+    面所有的机器， Ribbon会自动的帮助你基于某种规则(如简单轮询，随机连接等)去连接这些机器。我们也很容易使用 Ribbon实
+    现自定义的负载均衡算法。
+
+    配置：
+        80 - pom.xml：
+         <!-- Ribbon相关 -->
+                <dependency>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-eureka</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-ribbon</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-config</artifactId>
+                </dependency>
+                
+        config配置类添加注解：
+            @LoadBalanced  //Spring Cloud Ribbon是基于Netflix Ribbon实现的一套"客户端"负载均衡的工具
+    
