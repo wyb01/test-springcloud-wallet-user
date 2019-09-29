@@ -231,8 +231,48 @@
                 @EnableCircuitBreaker  //对Hystrix熔断机制的支持
           
         
-    
-    
+     （二）服务降级
+     
+           整体资源快不够了，忍痛将某些服务线关掉，待渡过难关，再开启回来。
+           
+           服务降级处理是在客户端实现完成的，与服务端没有关系
+           
+           搭建：
+               修改wallet-api工程，根据已有的UserClientService接口新建一个实现了FallBackFactory接口的类UserClientServiceFallbackFactory，对接口UserClientService的方法统一处理熔断，在上面添加注解：@Component
+               修改wallet-api工程，UserClientService接口在注解@FeignClient中添加fallbackFactory属性值：
+                   
+                    @FeignClient(value="WALLET-PROVIDER",fallbackFactory = UserClientServiceFallbackFactory.class)   //1、对哪一个微服务进行面向"接口"的编程 2、服务降级
+                    public interface UserClientService {
+                    
+                        @RequestMapping(value = "/user/get/{id}", method = RequestMethod.GET)
+                        public User get(@PathVariable("id") long id);
+                    
+                        @RequestMapping(value = "/user/list", method = RequestMethod.GET)
+                        public List<User> list();
+                    
+                        @RequestMapping(value = "/user/add", method = RequestMethod.POST)
+                        public boolean add(User user);
+                    
+                    }
+                    
+               wallet-consumer-feign - application.yml添加：
+               
+                        feign:
+                          hystrix:
+                            enabled: true
+                        
+           
+           测试：
+                3个 eureka先启动
+                微服务 microservicecloud-provider-dept8001启动
+                microservicecloud-consumer-dept-feign启动
+                正常访问测试  http://localhost/consumer/dept/get/1
+                故意关闭微服务 microservicecloud-provider-dept-8001
+                客户端自己调用提示   --  此时服务端provider已经down了，但是我们做了服务降级处理，让客户端在服务端不可用时也会获得提示信息而不会挂起耗死服务器
+           
+           
+           
+             
          
        
        
