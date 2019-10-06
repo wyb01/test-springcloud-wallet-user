@@ -320,7 +320,30 @@
                             <artifactId>spring-cloud-starter-zuul</artifactId>
                         </dependency>  
               Zuul注入进Eureka
-            3、 
+            3、 主启动类：
+                @EnableZuulProxy
+                
+        Zuul路由访问映射规则：
+            before:
+                http:/myzuul.com9527/wallet-provider/user/get/2
+                zuul:
+                  routes:
+                    mydept.serviceId: wallet-provider
+                    mydept.path: /mydept/**
+            after:
+                http://myzuul.com:9527/mydept/user/get/1
+                
+                
+           zuul:
+             #ignored-services: wallet-provider  #单个 （原真实服务名忽略）
+             prefix: /wallet                     #设置统一公共前缀
+             ignored-services: "*"               #多个
+           
+             routes:                               #域名映射
+               mydept.serviceId: wallet-provider   #微服务真实地址
+               mydept.path: /mydept/**             #配置后对外提供的虚拟地址
+               
+            访问地址： http://myzuul.com:9527/wallet/mydept/user/get/4
           
              
              

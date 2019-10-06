@@ -15,9 +15,9 @@ eureka:
 
 
 zuul:
-  #ignored-services: wallet-provider
-  prefix: /wallet
-  ignored-services: "*"
+  #ignored-services: wallet-provider  #单个 （原真实服务名忽略）
+  prefix: /wallet                     #设置统一公共前缀
+  ignored-services: "*"               #多个
 
   routes:                               #域名映射
     mydept.serviceId: wallet-provider   #微服务真实地址
