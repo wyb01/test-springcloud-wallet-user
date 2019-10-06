@@ -1,6 +1,6 @@
-/Users/wj/GitDemo/test-springboot-wallet-user/test-springcloud-wallet-user/wallet-provider-8001/src/main/java/com/wallet/service/UserService.java
-/Users/wj/GitDemo/test-springboot-wallet-user/test-springcloud-wallet-user/wallet-provider-8001/src/main/java/com/wallet/service/impl/UserServiceImpl.java
-/Users/wj/GitDemo/test-springboot-wallet-user/test-springcloud-wallet-user/wallet-provider-8001/src/main/java/com/wallet/config/SwaggerConfig.java
-/Users/wj/GitDemo/test-springboot-wallet-user/test-springcloud-wallet-user/wallet-provider-8001/src/main/java/com/wallet/dao/UserDao.java
-/Users/wj/GitDemo/test-springboot-wallet-user/test-springcloud-wallet-user/wallet-provider-8001/src/main/java/com/wallet/Provider8001_App.java
-/Users/wj/GitDemo/test-springboot-wallet-user/test-springcloud-wallet-user/wallet-provider-8001/src/main/java/com/wallet/controller/UserController.java
+/Users/wyb/Java_Project/GitDemo/springcloud-user-demo/test-springcloud-wallet-user/wallet-provider-8001/src/main/java/com/wallet/Provider8001_App.java
+/Users/wyb/Java_Project/GitDemo/springcloud-user-demo/test-springcloud-wallet-user/wallet-provider-8001/src/main/java/com/wallet/config/SwaggerConfig.java
+/Users/wyb/Java_Project/GitDemo/springcloud-user-demo/test-springcloud-wallet-user/wallet-provider-8001/src/main/java/com/wallet/service/impl/UserServiceImpl.java
+/Users/wyb/Java_Project/GitDemo/springcloud-user-demo/test-springcloud-wallet-user/wallet-provider-8001/src/main/java/com/wallet/dao/UserDao.java
+/Users/wyb/Java_Project/GitDemo/springcloud-user-demo/test-springcloud-wallet-user/wallet-provider-8001/src/main/java/com/wallet/controller/UserController.java
+/Users/wyb/Java_Project/GitDemo/springcloud-user-demo/test-springcloud-wallet-user/wallet-provider-8001/src/main/java/com/wallet/service/UserService.java

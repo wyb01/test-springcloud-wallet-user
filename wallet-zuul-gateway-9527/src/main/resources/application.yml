@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: wallet-zuul-gateway
+    name: wallet-zuul-gateway  #注入进eureka微服务名称
 
 eureka:
   client:

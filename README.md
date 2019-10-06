@@ -268,10 +268,61 @@
                 microservicecloud-consumer-dept-feign启动
                 正常访问测试  http://localhost/consumer/dept/get/1
                 故意关闭微服务 microservicecloud-provider-dept-8001
-                客户端自己调用提示   --  此时服务端provider已经down了，但是我们做了服务降级处理，让客户端在服务端不可用时也会获得提示信息而不会挂起耗死服务器
+                客户端自己调用提示   --  此时服务端provider已经down了，但是我们做了服务降级处理，
+                    让客户端在服务端不可用时也会获得提示信息而不会挂起耗死服务器
+                
+八、豪猪hystrixDashboard  
+    
+        除了隔离依赖服务的调用以外， Hystriⅸ还提供了准实时的调用监控( Hystrix Dashboard)， Hystrix会持绩地记录所有通过
+        Hystrix发起的请求的执行信息，并以统计报表和图形的形式展示给用户，包括每秒执行多少请求多少成功，多少失败等。
+        Netflix通过 hystrix-metrics-event-stream项目实现了对以上指标的监控。 Spring Cloud提供了 Hystrix Dashboard的整合，
+        对监控内容转化成可视化界面。
+        
+        pom.xml:
+                    <!-- hystrix和 hystrix-dashboard相关 -->
+                    <dependency>
+                        <groupId>org.springframework.cloud</groupId>
+                        <artifactId>spring-cloud-starter-hystrix</artifactId>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.springframework.cloud</groupId>
+                        <artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>
+                    </dependency>   
+                    
+         启动类：
+            @EnableHystrixDashboard   //开启仪表盘监控注解
+            
+        
+         所有Provider微服务提供类（8001/8002/8003）都需要监控依赖配置：
+            <!-- actuator监控信息完善 -->
+                    <dependency>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-actuator</artifactId>
+                    </dependency>
            
-           
-           
+九、Zuul是什么
+    
+        zuu包含了对请求的路由和过滤两个最主要的功能：
+            其中路由功能负责将外部请求转发到貝体的微服务实例上，是实现外部访问统一入口的基础，而过滤器功能则负责对请求的处理过
+            程迸行干预，是实现请求校验、服务聚合等功能的基础。Zuul和 Eureka进行整合，将Zuul自身注册为Eureka服务治理下的应用，
+            同时从Eureka中获得其他微服务的消息，也即以后的访问微服务都是通过Zuul跳转后获得。
+            
+        注意：zuu服务最终还是会注册进Eureka
+        
+          提供 = 代理+路由+过滤三大功能 
+          
+        创建步骤：
+            1、新建工程：wallet-zuul-gateway-9527
+            2、pom.xml:
+                        <!-- zuul路由网关 -->
+                        <dependency>
+                            <groupId>org.springframework.cloud</groupId>
+                            <artifactId>spring-cloud-starter-zuul</artifactId>
+                        </dependency>  
+              Zuul注入进Eureka
+            3、 
+          
+             
              
          
        
