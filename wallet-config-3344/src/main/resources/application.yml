@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name:  wallet-config
+    name:  wallet-config    #微服务名称
   cloud:
     config:
       server:

@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: wallet-zuul-gateway
+    name: wallet-zuul-gateway  #注入进eureka微服务名称
 
 eureka:
   client:
@@ -25,8 +25,8 @@ zuul:
 
 info:
   app.name: wallet-zuul-gateway
-  build.artifactId: wallet-zuul-gateway-9527
-  build.version: 1.0-SNAPSHOT
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
 
 
 

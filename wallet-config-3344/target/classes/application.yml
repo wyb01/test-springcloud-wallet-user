@@ -3,9 +3,10 @@ server:
 
 spring:
   application:
-    name:  wallet-config
+    name:  wallet-config    #微服务名称
   cloud:
     config:
       server:
         git:
-          uri: git@github.com:wyb01/microservicecloud-config.git #GitHub上面的git仓库名字
+          #uri: git@github.com:wyb01/microservicecloud-config.git #GitHub上面的git仓库名字
+           uri: https://github.com/wyb01/microservicecloud-config.git

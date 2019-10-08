@@ -14,7 +14,7 @@ import java.util.Date;
  * @create: 2019-09-17 16:39
  **/
 @NoArgsConstructor   //无参构造函数
-@Data                //注解在类上, 为类提供读写属性, 此外还提供了 equals()、hashCode()、toString() 方法
+@Data           //注解在类上, 为类提供读写属性, 此外还提供了 equals()、hashCode()、toString() 方法
 @Accessors(chain=true)
 public class User implements Serializable {
 
@@ -36,6 +36,5 @@ public class User implements Serializable {
     private Integer active; //是否激活
     private Date loginTime ;
     private String db_source;
-
 
 }

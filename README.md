@@ -268,12 +268,113 @@
                 microservicecloud-consumer-dept-feign启动
                 正常访问测试  http://localhost/consumer/dept/get/1
                 故意关闭微服务 microservicecloud-provider-dept-8001
-                客户端自己调用提示   --  此时服务端provider已经down了，但是我们做了服务降级处理，让客户端在服务端不可用时也会获得提示信息而不会挂起耗死服务器
-           
-           
-      （三）服务熔断降级小总结     
-      
+                客户端自己调用提示   --  此时服务端provider已经down了，但是我们做了服务降级处理，
+                    让客户端在服务端不可用时也会获得提示信息而不会挂起耗死服务器
+                
+八、豪猪hystrixDashboard  
+    
+        除了隔离依赖服务的调用以外， Hystriⅸ还提供了准实时的调用监控( Hystrix Dashboard)， Hystrix会持绩地记录所有通过
+        Hystrix发起的请求的执行信息，并以统计报表和图形的形式展示给用户，包括每秒执行多少请求多少成功，多少失败等。
+        Netflix通过 hystrix-metrics-event-stream项目实现了对以上指标的监控。 Spring Cloud提供了 Hystrix Dashboard的整合，
+        对监控内容转化成可视化界面。
+        
+        pom.xml:
+                    <!-- hystrix和 hystrix-dashboard相关 -->
+                    <dependency>
+                        <groupId>org.springframework.cloud</groupId>
+                        <artifactId>spring-cloud-starter-hystrix</artifactId>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.springframework.cloud</groupId>
+                        <artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>
+                    </dependency>   
+                    
+         启动类：
+            @EnableHystrixDashboard   //开启仪表盘监控注解
             
+        
+         所有Provider微服务提供类（8001/8002/8003）都需要监控依赖配置：
+            <!-- actuator监控信息完善 -->
+                    <dependency>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-actuator</artifactId>
+                    </dependency>
+
+九、Zuul是什么
+    
+        zuu包含了对请求的路由和过滤两个最主要的功能：
+            其中路由功能负责将外部请求转发到貝体的微服务实例上，是实现外部访问统一入口的基础，而过滤器功能则负责对请求的处理过
+            程迸行干预，是实现请求校验、服务聚合等功能的基础。Zuul和 Eureka进行整合，将Zuul自身注册为Eureka服务治理下的应用，
+            同时从Eureka中获得其他微服务的消息，也即以后的访问微服务都是通过Zuul跳转后获得。
+            
+        注意：zuu服务最终还是会注册进Eureka
+        
+          提供 = 代理+路由+过滤三大功能 
+          
+        创建步骤：
+            1、新建工程：wallet-zuul-gateway-9527
+            2、pom.xml:
+                        <!-- zuul路由网关 -->
+                        <dependency>
+                            <groupId>org.springframework.cloud</groupId>
+                            <artifactId>spring-cloud-starter-zuul</artifactId>
+                        </dependency>  
+              Zuul注入进Eureka
+            3、 主启动类：
+                @EnableZuulProxy
+                
+        Zuul路由访问映射规则：
+            before:
+                http:/myzuul.com9527/wallet-provider/user/get/2
+                zuul:
+                  routes:
+                    mydept.serviceId: wallet-provider
+                    mydept.path: /mydept/**
+            after:
+                http://myzuul.com:9527/mydept/user/get/1
+                
+                
+           zuul:
+             #ignored-services: wallet-provider  #单个 （原真实服务名忽略）
+             prefix: /wallet                     #设置统一公共前缀
+             ignored-services: "*"               #多个
+           
+             routes:                               #域名映射
+               mydept.serviceId: wallet-provider   #微服务真实地址
+               mydept.path: /mydept/**             #配置后对外提供的虚拟地址
+               
+            访问地址： http://myzuul.com:9527/wallet/mydept/user/get/4
+            
+十、Config分布式配置中心
+    
+           微服务意味着要将单体应用中的业务拆分成一个个子服务，每个服务的力度相对较小，因此系统中会出现大量的服务。
+        由于每个服务都需要必要的配置信息才能运行，所以一套集中的、动态的配置管理设施是必不可少的。
+        SpringCloud提供了ConfigServer来解决这个问题，我们每一个微服务自己带着一个application.yml，上百个配置文件的管理。。。
+        
+        一、是什么
+                SpringCloud Config为微服务架构中的微服务提供集中式的外部配置支持，配置服务器为
+                各个不同微服务应用的所有环境提供了一个中心化的外部配置。
+        二、怎么玩
+            SpringCloud Config 分为客户端和服务器两部分
+            服务端也称为分布式配置中心，它是一个独立的微服务应用，用来连接配置服务器并为客户端提供获取配置信息，加密/解密信息等访问接口
+            客户端则是通过指定的配置中心来管理应用资源，以及与业务相关的配置内容，并在启动的时候从配置中心获取和加载配置信息，
+            配置服务器默认采用git来存储配置信息，这样就有助于对环境配置进行板本管理，并且可以通过git客户端工具来方便的管理和
+            访问配置内容
+        三、创建步骤：
+            1、pom.xml:
+                        <!-- springCloud Config -->
+                        <dependency>
+                            <groupId>org.springframework.cloud</groupId>
+                            <artifactId>spring-cloud-config-server</artifactId>
+                        </dependency>
+             2、启动类：
+                     @EnableConfigServer
+        
+            
+             
+            
+          
+             
              
          
        
